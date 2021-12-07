@@ -10,8 +10,8 @@ Convolutional with batch normalization: gamma, beta, mean, variance, conv weight
 Without: conv biases, conv weights)
 '''
 import numpy as np
-from yolov3 import yolov3_net
-from yolov3 import parse_cfg_file
+from yolov3_2 import yolov3_net
+from yolov3_2 import parse_cfg_file
 
 def load_weights(model, cfg_file, weight_file):
     '''read weights file and convert them to tensorflow2 weights'''
@@ -20,7 +20,7 @@ def load_weights(model, cfg_file, weight_file):
     # skip header (first 5 lines)
     np.fromfile(fp, dtype=np.int32, count=5)
 
-    blocks = parse_cfg(cfg_file)
+    blocks = parse_cfg_file(cfg_file)
 
     # iterate blocks to know if the convolutional layer is with batch normalization or not.
     for i, block in enumerate(blocks[1:]):
@@ -49,7 +49,7 @@ def load_weights(model, cfg_file, weight_file):
             conv_weights = np.fromfile(fp, dtype=np.float32, count=np.product(conv_shape))
 
             # tf shape (height, width, in_dim, out_dim)
-            conv_weight = conv_weights.reshape(conv_shape).transpose([2, 3, 1, 0])
+            conv_weights = conv_weights.reshape(conv_shape).transpose([2, 3, 1, 0])
 
             if 'batch_normalize' in block:
                 norm_layer.set_weights(bn_weights)

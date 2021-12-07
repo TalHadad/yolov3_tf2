@@ -41,7 +41,7 @@ def parse_cfg_list(cfg_list: List) -> List:
 
 def yolov3_net(cfg_file: str, model_size: int, num_classes: int):
     blocks = parse_cfg_file(cfg_file)
-    output = {}
+    outputs = {}
     output_filters = []
     filters = []
     out_pred = []
@@ -80,7 +80,7 @@ def yolov3_net(cfg_file: str, model_size: int, num_classes: int):
             # otherwise, it uses the linear activation.
             if 'batch_normalize' in block:
                 inputs = BatchNormalization(name=f'bnorm_{str(i)}')(inputs)
-                inputs = LeakyReLU(alpha=0.1, name='leaky_{str(i)}')(inputs)
+                inputs = LeakyReLU(alpha=0.1, name=f'leaky_{str(i)}')(inputs)
 
         # 2. Upsample Layer
         # Upsample by a factor of stride
@@ -94,13 +94,13 @@ def yolov3_net(cfg_file: str, model_size: int, num_classes: int):
         #       Backward -4 number of layers, then output the feature map from that layer.
         # e.g.: [route] layers = -1, 61
         #       Concatenate the feature map from previous layer (-1) and the feature map from layer 61
-        elif (block['type'] == 'route')
+        elif (block['type'] == 'route'):
             block['layers'] = block['layers'].split(',')
             start = int(block['layers'][0])
 
             if len(block['layers']) > 1:
                 end = int(block['layers'][1]) - i
-                filters = output_filters[i + start], outputs[i + end] # Index nagatif :end - index
+                filters = output_filters[i + start] + output_filters[i + end] # Index nagatif :end - index
                 inputs = tf.concat([outputs[i + start], outputs[i + end]], axis=1)
             else:
                 filters = output_filters[i + start]
@@ -125,12 +125,12 @@ def yolov3_net(cfg_file: str, model_size: int, num_classes: int):
 
             # reshape output to [None, B * grid size * grid size, 5 + C]
             # B = number of anchors, C = number of classes
-            out_shape = input.get_shape().as_list()
+            out_shape = inputs.get_shape().as_list()
             inputs = tf.reshape(inputs, [-1, n_anchors * out_shape[1] * out_shape[2], 5 + num_classes])
 
             # access all boxes attributes
             box_centers = inputs[:, :, 0:2]
-            box_shapes = intputs[:, :, 2:4]
+            box_shapes = inputs[:, :, 2:4]
             confidence = inputs[:, :, 4:5]
             classes = inputs[:, :, 5:num_classes + 5]
 
@@ -171,7 +171,7 @@ def yolov3_net(cfg_file: str, model_size: int, num_classes: int):
 
             # Since the route and shortcut layers need output feature maps from previous layers,
             # we keep track of feature maps and output filters in every iteration.
-        outputs[i] = input
+        outputs[i] = inputs
         output_filters.append(filters)
 
     model = Model(input_image, out_pred)
