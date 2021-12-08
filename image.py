@@ -1,3 +1,5 @@
+
+
 # image.py
 
 import tensorflow as tf
@@ -6,9 +8,9 @@ import cv2
 import numpy as np
 from yolov3 import yolov3_net
 
-physical_devices = tf.config.experimental.list_physical_devices('GPU')
-assert len(physical_devices) > 0, 'Not enough GPU hardware devices available'
-tf.config.experimental.set_memory_growth(physical_devices[0], True)
+# physical_devices = tf.config.experimental.list_physical_devices('GPU')
+# assert len(physical_devices) > 0, 'Not enough GPU hardware devices available'
+# tf.config.experimental.set_memory_growth(physical_devices[0], True)
 
 model_size = (416, 416, 3)
 num_classes = 80
@@ -23,6 +25,7 @@ weight_file = 'weights/yolov3_weights.tf'
 img_path = 'data/images/test.jpg'
 
 def main():
+    '''Main pipeline: loading model, reading image, preforming detection, drawing outputs'''
     model = yolov3_net(cfg_file, model_size, num_classes)
     model.load_weights(weight_file)
 
@@ -55,3 +58,6 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+# To run detection on image (in bash):
+#     $ python image.py

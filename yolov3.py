@@ -86,8 +86,8 @@ def yolov3_net(cfg_file: str, model_size: int, num_classes: int):
         # Upsample by a factor of stride
         # e.g.: [upsample] stride=2
         elif (block['type'] == 'upsample'):
-                stride = int(block['stride'])
-                inputs = UpSampling2D(stride)(inputs)
+            stride = int(block['stride'])
+            inputs = UpSampling2D(stride)(inputs)
 
         # 3. Route Layer
         # e.g.: [route] layers = -4
@@ -100,8 +100,8 @@ def yolov3_net(cfg_file: str, model_size: int, num_classes: int):
 
             if len(block['layers']) > 1:
                 end = int(block['layers'][1]) - i
-                filters = output_filters[i + start] + output_filters[i + end] # Index nagatif :end - index
-                inputs = tf.concat([outputs[i + start], outputs[i + end]], axis=1)
+                filters = output_filters[i + start] + output_filters[end] # Index negatif :end - index
+                inputs = tf.concat([outputs[i + start], outputs[i + end]], axis=-1)
             else:
                 filters = output_filters[i + start]
                 inputs = outputs[i + start]
@@ -119,6 +119,7 @@ def yolov3_net(cfg_file: str, model_size: int, num_classes: int):
             mask = block['mask'].split(',')
             mask = [int(x) for x in mask]
             anchors = block['anchors'].split(',')
+            anchors = [int(a) for a in anchors]
             anchors = [(anchors[i], anchors[i + 1]) for i in range(0, len(anchors), 2)]
             anchors = [anchors[i] for i in mask]
             n_anchors = len(anchors)
