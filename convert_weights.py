@@ -10,8 +10,8 @@ Convolutional with batch normalization: gamma, beta, mean, variance, conv weight
 Without: conv biases, conv weights)
 '''
 import numpy as np
-from yolov3_2 import yolov3_net
-from yolov3_2 import parse_cfg_file
+from yolov3 import yolov3_net
+from yolov3 import parse_cfg_file
 
 def load_weights(model, cfg_file, weight_file):
     '''read weights file and convert them to tensorflow2 weights'''
