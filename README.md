@@ -12,6 +12,7 @@ $ source yolov3_tf2/bin/activate
 Install packages:
 (yolov3_tf2)$ pip install tensorflow
 (yolov3_tf2)$ pip install opencv-python
+(yolov3_tf2)$ pip3 install --upgrade numpy
 (In raspberry pi, installation is different)
 
 Convert weights:
