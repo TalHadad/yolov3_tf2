@@ -12,8 +12,11 @@ $ source yolov3_tf2/bin/activate
 Install packages:
 (yolov3_tf2)$ pip install tensorflow
 (yolov3_tf2)$ pip install opencv-python
-(yolov3_tf2)$ pip3 install --upgrade numpy
 (In raspberry pi, installation is different)
+
+(yolov3_tf2)$ pip3 install --upgrade numpy
+(yolov3_tf2)$ pip3 install pillow
+(yolov3_tf2)$ pip3 install "ptvsd>=4.2" (to degug in spacemacs)
 
 Convert weights:
 (yolov3_tf2)$ python convert_weights.py
