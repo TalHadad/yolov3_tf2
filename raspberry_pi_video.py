@@ -32,7 +32,7 @@ def start_capture():
     # start_recording() for video
     # start_preview() for live stream
     try:
-        with PiCamera() as camera:
+        with picamera.PiCamera() as camera:
             while True:
                 start = time.time()
                 now = datetime.now()
