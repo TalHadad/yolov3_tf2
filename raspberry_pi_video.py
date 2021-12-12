@@ -39,7 +39,8 @@ def start_capture():
                 now = datetime.now()
                 camera.annotate_text = str(now)
                 camera.capture('data/images/raspi.jpeg', format='jpeg')
-                frame = PIL.Image.open('data/images/raspi.jpeg')
+                #frame = PIL.Image.open('data/images/raspi.jpeg')
+                frame = cv2.imread('data/images/raspi.jpeg')
                 cv2.imshow(win_name, frame)
                 # analyzed_image = analyze_image(image)
 
