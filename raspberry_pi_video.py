@@ -68,7 +68,6 @@ def start_capture():
 
     finally:
         cv2.destroyAllWindows()
-        cap.release()
         print('Detections have been performed successfully.')
 
 def analyze_image(frame):
