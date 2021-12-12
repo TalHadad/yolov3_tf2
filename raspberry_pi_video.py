@@ -8,6 +8,7 @@ import time
 
 from datetime import datetime
 import picamera
+import PIL
 
 model_size = (416, 416, 3)
 num_classes = 80
@@ -37,7 +38,8 @@ def start_capture():
                 start = time.time()
                 now = datetime.now()
                 camera.annotate_text = str(now)
-                frame = camera.capture('data/images/raspi.jpeg', format='jpeg')
+                camera.capture('data/images/raspi.jpeg', format='jpeg')
+                frame = PIL.Image.open('data/images/raspi.jpeg')
                 cv2.imshow(win_name, frame)
                 # analyzed_image = analyze_image(image)
 
