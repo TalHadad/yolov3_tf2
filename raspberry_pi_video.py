@@ -37,7 +37,7 @@ def start_capture():
                 start = time.time()
                 now = datetime.now()
                 camera.annotate_text = str(now)
-                frame = camera.capture('~/Desktop/raspi.jpeg', format='jpeg')
+                frame = camera.capture('data/images/raspi.jpeg', format='jpeg')
                 # analyzed_image = analyze_image(image)
 
                 resized_frame = tf.expand_dims(frame, 0)
