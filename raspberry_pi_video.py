@@ -20,8 +20,57 @@ confidence_threshold = 0.5
 
 cfg_file = 'cfg/yolov3.cfg'
 weight_file = 'weights/yolov3_weights.tf'
+def start_capture_single_frames():
+    model = yolov3_net(cfg_file, model_size, num_classes)
+    model.load_weights(weight_file)
 
-def start_capture():
+    class_names = load_class_names(class_name)
+    win_name = 'Yolov3 detection'
+    cv2.namedWindow(win_name)
+
+
+    try:
+        while True:
+            cap = cv2.VideoCapture(0)
+            frame_size = (cap.get(cv2.CAP_PROP_FRAME_WIDTH),
+                          cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+            start = time.time()
+            ret, frame = cap.read()
+            if not ret:
+                break
+            resized_frame = tf.expand_dims(frame, 0)
+            resized_frame = resize_image(resized_frame, (model_size[0], model_size[1]))
+
+            pred = model.predict(resized_frame)
+            boxes, scores, classes, nums = output_boxes(pred,
+                                                        model_size,
+                                                        max_output_size = max_output_size,
+                                                        max_output_size_per_class = max_output_size_per_class,
+                                                        iou_threshold = iou_threshold,
+                                                        confidence_threshold = confidence_threshold)
+            img = draw_outputs(frame, boxes, scores, classes, nums, class_names)
+            cv2.imshow(win_name, img)
+
+            stop = time.time()
+            seconds = stop - start
+            print(f'Time taken : {seconds} seconds')
+
+            # Calcutate frames per seconds
+            fps = 1 / seconds
+            print(f'Estimated frames per second : {fps}')
+
+            key = cv2.waitKey(1) & 0xFF
+
+            if key == ord('q'):
+                break
+
+            cap.release()
+    finally:
+        cv2.destroyAllWindows()
+        print('Detections have been performed successfully.')
+
+# very slow, 30 sec for frame
+def analyze_picamera_single_frames():
     model = yolov3_net(cfg_file, model_size, num_classes)
     model.load_weights(weight_file)
 
@@ -74,10 +123,8 @@ def start_capture():
         cv2.destroyAllWindows()
         print('Detections have been performed successfully.')
 
-def analyze_image(frame):
-    resized_frame = tf.expand_dims(frame, 0)
-    resized_frame = resize_image(resized_frame, (model_size[0], model_size[1]))
-def main():
+# slow
+def analyze_cv_live_steam():
     model = yolov3_net(cfg_file, model_size, num_classes)
     model.load_weights(weight_file)
 
@@ -131,5 +178,4 @@ def main():
         print('Detections have been performed successfully.')
 
 if __name__ == '__main__':
-    # main()
-    start_capture()
+    start_capture_single_frames()
