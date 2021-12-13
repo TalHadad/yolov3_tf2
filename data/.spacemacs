@@ -37,13 +37,17 @@ This function should only modify configuration layer settings."
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     ;; auto-completion
-     ;; better-defaults
+     ;;auto-completion
+     (auto-completion :variables
+                      auto-completion-enable-help-tooltip t
+                      auto-completion-enable-snippets-in-popup t
+                      auto-completion-enable-sort-by-usage t)
+     better-defaults
      emacs-lisp
      dap
      git
      helm
-     ;; lsp
+     ;;lsp
      ;; markdown
      ;; multiple-cursors
      org
@@ -56,10 +60,9 @@ This function should only modify configuration layer settings."
      treemacs
      ;; packages I added manualy:
      ;; mu4e
-     ;; (python :variables
-     ;;        python-backend 'lsp
-     ;;        python-lsp-server 'pyright)
-     python
+     (python :variables
+             python-backend 'anaconda)
+     ;;python
      ;;ranger
      ;;colors
      (colors :variables
@@ -77,7 +80,7 @@ This function should only modify configuration layer settings."
    ;; `dotspacemacs/user-config'. To use a local version of a package, use the
    ;; `:location' property: '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(jedi)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -708,6 +711,8 @@ before packages are loaded."
 
   ;;  :init (setq lsp-log-io t)
   ;;  :hook (python-mode . lsp))  ; or lsp-deferred
+  (eval-after-load "company"
+    '(add-to-list 'company-backends 'company-anaconda))
 
 )
 ;; Do not write anything past this comment. This is where Emacs will
