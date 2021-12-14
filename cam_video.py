@@ -1,4 +1,3 @@
-
 # raspberry_pi_video.py
 import tensorflow as tf
 from utils import load_class_names, output_boxes, draw_outputs, resize_image
@@ -24,10 +23,11 @@ def analyze_cv_single_picture():
     class_names = load_class_names(class_name)
     win_name = 'Yolov3 detection'
     cv2.namedWindow(win_name)
-
     cap = cv2.VideoCapture(0)
+
     frame_size = (cap.get(cv2.CAP_PROP_FRAME_WIDTH),
                   cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
     cap.release()
 
     try:
