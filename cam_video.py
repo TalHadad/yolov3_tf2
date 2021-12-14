@@ -24,10 +24,11 @@ def analyze_cv_single_picture():
     class_names = load_class_names(class_name)
     win_name = 'Yolov3 detection'
     cv2.namedWindow(win_name)
-
     cap = cv2.VideoCapture(0)
+
     frame_size = (cap.get(cv2.CAP_PROP_FRAME_WIDTH),
                   cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
     cap.release()
 
     try:
@@ -62,10 +63,16 @@ def analyze_cv_single_picture():
             fps = 1 / seconds
             print(f'Estimated frames per second : {fps}')
 
+<<<<<<< HEAD
             key = cv2.waitKey(4) & 0xFF
 
             if key == ord('q'):
                 print('Quitting.')
+=======
+            key = cv2.waitKey(1) & 0xFF
+
+            if key == ord('q'):
+>>>>>>> 50cb876fc5e219e52229afe8760fb03568b83f37
                 break
 
     finally:
