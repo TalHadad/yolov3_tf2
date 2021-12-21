@@ -1,4 +1,7 @@
-from torch import nn, F
+#############################################################################################
+# page 5: Deep networks
+#############################################################################################
+
 ######################################
 # 1. Dropout
 ######################################
@@ -7,6 +10,8 @@ from torch import nn, F
 # PyTorch normalize the fvalues in the training phase 1/(1-p) (p in [0,1] -> 1/(1-p) in [1,inf)) (e.g. p=0.2).
 # p=0 don't kill any neurons, p=1 kill all neurons.
 # In PyTorch you can select different p for each layer, usually the more neurons in the layer higher probability.
+
+from torch import nn, F
 
 # 1.1. using nn.Module
 # $ Methods: nn.Dropout, self.drop, F.relu, self.linear1
