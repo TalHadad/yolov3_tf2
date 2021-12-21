@@ -97,7 +97,7 @@ model = nn.Sequential(nn.Linear(in_size, hidden1_size),
                       nn.Linear(hidden_2, out_size))
 
 # 4.3. using nn.ModuleList
-# $ Methods: nn.Module, nn.ModuleList, nn.Linear, F.relu
+# $ Methods: nn.Module, nn.ModuleList, .append,  nn.Linear, F.relu
 class Net(nn.Module):
       def __init__(self, layers):
           super(Net, self).__init__()
