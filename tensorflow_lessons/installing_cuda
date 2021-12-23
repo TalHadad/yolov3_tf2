@@ -1,0 +1,46 @@
+# download runfile(local)
+https://developer.nvidia.com/cuda-10.1-download-archive-base?target_os=Linux&target_arch=x86_64&target_distro=Ubuntu&target_version=1804&target_type=runfilelocal
+
+# download
+# cuDNN Runtime Library for Ubuntu18.04 (Deb)
+# cuDNN Developer Library for Ubuntu18.04 (Deb)
+https://developer.nvidia.com/rdp/cudnn-download
+
+# Purge existign CUDA first
+sudo apt --purge remove "cublas*" "cuda*"
+sudo apt --purge remove "nvidia*"
+
+# restart
+
+# In Software & Updates -> Additinal Drivers -> Selece nvidia-driver-435 -> Apply Changes
+
+# restart
+
+# From the directory where all the downloaded files are found, run in terminal
+
+# accept -> select only CUDA Toolkit 10.1 -> Install -> Upgrade all
+>> sudo ./cuda_10.1.105_418.39_linux.run
+
+>> sudo dpkg -i libcudnn7_7.6.5.32-1+cuda10.1_amd64.deb
+>> sudo dpkg -i libcudnn7-dev_7.6.5.32-1+cuda10.1_amd64.deb
+>> sudo apt-mark hold libcudnn7
+>> sudo apt-mark hold libcudnn7-dev
+
+>> gedit ~/.bashrc 
+	# < below '# Alias definitions.'> add the following lines
+	export PATH=/usr/local/cuda-10.1/bin:$PATH
+	export LD_LIBRARY_PATH=/usr/local/cuda-10.1/lib64
+	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/extras/CUPTI/lib64
+
+# create environment 
+>> conda create -n py36_tf1 python=3.6
+>> source activate py36_tf1
+>> conda install ipython
+>> conda install -c anaconda tensorflow-gpu=1.14.0
+>> ipython
+	>> import tensorflow as tf 
+	>> tf.test.is_gpu_available()
+	# you should get True
+	>> exit
+
+>> pip install keras==2.2.5

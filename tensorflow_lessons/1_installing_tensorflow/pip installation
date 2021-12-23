@@ -1,0 +1,18 @@
+We will install CPU variant of TensorFlow Ubuntu machine.
+We will install Virtual env, create a cirtual environment to install TensorFlow 2
+Using pip (a Python package manager).
+If you have Conda installed, create and activate a virtual enviorment.
+Python version >=3.4 ($ python3 --version),
+pip version >=19.0 ($ pip --version),
+Ubuntu version >= 17.04 (64-bit)
+
+virtualenv:
+    $ pip install --user -U virtualenv
+    $ virtualenv TF2env # TF2env =<environment name>
+    $ source TF2env/bin/activate
+virtualenv or conda:
+    (TF2env)$ pip install tensorflow==2.0
+    $ python3
+    >>> import tensorflow as tf
+    >>> tf.__version__
+    '2.0.0'

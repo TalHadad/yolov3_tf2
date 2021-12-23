@@ -1,0 +1,32 @@
+We will install TensorFlow GPU via a Docker container.
+We will install the Docket Engine, install Nvidia drivers, and Nvidia Container Toolkit.
+Using a computer in a build cluste, that is running Ubuntu and have access to a Nvidia GPU.
+* Onlu work on Linux machine with a Nvidia GPU (if you use Mac or Winsows, you woll need to install the dependencies of TensorFlow GPU directly).
+
+Docker: (Ubuntu version>=18.04)
+    $ curl -fsSL https://download.docker.com/... | sudo apt-key add -$$ sudo apt-rep # add Docker key to apt key manager
+    $ sudo apt-get update $$ sudo apt-get install docker ...
+    $ sudo docker run hello-world
+
+Nvidia GPU drivers:
+    $ sudo ubuntu-drivers autoinstall
+    $ nvidia-smi # this statistics is locally (no need for Nvidia container toolkit)
+
+Nvidia Container Toolkit:
+    $ distribution=$(. /etc/..) && curl -s -L http://nvidia.github... # add repository key to opt
+    $ sudo apt-get update && sudo apt-get install -y nvidia-container-toolkit
+    $ sudo systemctl restart docker
+    $ sudo docker run --gpus all --rm nvidia/cuba nvidia-smi # this statistics run from the docker-container (able to access the GPU)
+
+Run Nvidia TensorFlow Docker Container: (using TensorFlow GPU Docker)
+    $ mkdir my_jupyter_notebooks
+    $ sudo docker run --gpus all -it -p 8889:8888 -v /home/jerome/my_jupyter_notebook :/tf tensorflow/tensorflow:latest-gpu-py3-jupyter
+    $ ssh -N -f -L localhost:8888:localhost:8889 jerome@boden.ma.ic.ac.uk #if using remote machine (port forwarding)
+    # browse to localhost:8888 and enter the token
+    # create a new notebook and check access to TensorFlow2 and GPUs on the host machine (remote):
+        import tensorflow as tf
+        tf.__version__
+        tf.test.is_gpu_avaliable()
+    # when tou finish, to stop the container run:
+    $ sudo docker container ls $ and extract container id
+    $ sudo docker stop <container id>
