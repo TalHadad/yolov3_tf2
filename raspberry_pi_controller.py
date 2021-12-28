@@ -9,7 +9,7 @@ GPIO.setmode(GPIO.BOARD)
 def main():
     print('starting GPIO 11 and 13.')
     # define output pwms
-    pwm_nums = np.array([11,12,13,15])
+    pwm_nums = [11,12,13,15]
     for num in pwm_nums:
         GPIO.setup(num, GPIO.OUT)
 
@@ -21,9 +21,9 @@ def main():
     pwms = set()
     for num in pwm_nums:
         # PWM(pin, freq) pin_num/GPIO_num, requency
-        pwm = GPIO.PWM(num, 1000)
+        pwm = GPIO.PWM(num, 100)
         # start(dutyCycle), dutyCycle = [0,100] continuous range
-        pwm.start(100)
+        pwm.start(19)
         #  ChangeFrequency(freq) freq = new frequency in Hertz
         #pwm.ChangeFrequency(freq)
         # ChangeDutyCycle(dutyCycle) dutyCycle = [0,100] continuous range
