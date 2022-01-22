@@ -96,5 +96,5 @@ def test_forward():
 
 
 if __name__ == '__main__':
-    #main()
-    test_forward()
+    main()
+    #test_forward()
