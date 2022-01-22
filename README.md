@@ -12,7 +12,7 @@ $ source yolov3_tf2/bin/activate
 Install packages:
 (yolov3_tf2)$ pip install tensorflow
 (yolov3_tf2)$ pip install opencv-python
-(In raspberry pi, installation is different)
+(In raspberry pi, installation is different, see RaspberryPi/web_cam.txt)
 
 (yolov3_tf2)$ pip3 install --upgrade numpy
 (yolov3_tf2)$ pip3 install pillow
